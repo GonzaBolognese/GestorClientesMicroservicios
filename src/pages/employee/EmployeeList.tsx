@@ -2,12 +2,12 @@ import { IonButtons, IonButton, IonCard, IonCol, IonContent, IonGrid, IonHeader,
 import { useHistory, useParams } from 'react-router';
 import { add, close, pencil } from 'ionicons/icons';
 import { useEffect, useState } from 'react';
-import { removeCustomer, saveCustomer, searchCustomer } from './CustomerApi';
-import Customer from './Customer';
+import { removeEmployee, searchEmployee } from './EmployeeApi';
+import Employee from './Employee';
 
 
-const CustomerList: React.FC = () => {
-  const [clientes, setClientes] = useState<Customer[]>([]);
+const EmployeeList: React.FC = () => {
+  const [empleados, setEmpleados] = useState<Employee[]>([]);
   const { name } = useParams<{ name: string; }>();
   const history = useHistory();
 
@@ -16,21 +16,21 @@ const CustomerList: React.FC = () => {
   },[history.location.pathname]);
 
   const search = () => {
-    let result = searchCustomer()
-    setClientes(result)
+    let result = searchEmployee()
+    setEmpleados(result)
   }
 
   const remove = (id:string) => {
-    removeCustomer(id);
+    removeEmployee(id);
     search()
   }
 
-  const addCustomer = () => {
-    history.push('customers/new')
+  const addEmployee = () => {
+    history.push('employees/new')
   }
 
-  const editCustomer = (id: string) => {
-    history.push('customers/' + id)
+  const editEmployee = (id: string) => {
+    history.push('employees/' + id)
   }
 
   return (
@@ -46,12 +46,12 @@ const CustomerList: React.FC = () => {
 
       <IonContent>
         <IonCard>
-            <IonTitle className='table-title'>Gestion de Clientes</IonTitle>
+            <IonTitle className='table-title'>Gestion de Empleados</IonTitle>
 
             <IonItem>
-                <IonButton onClick={addCustomer} color="primary" fill='outline' slot="end" size='default'>
+                <IonButton onClick={addEmployee} color="primary" fill='outline' slot="end" size='default'>
                     <IonIcon icon={add} />
-                    Agregar Cliente
+                    Agregar Empleado
                 </IonButton>
             </IonItem>
             <IonGrid className='table'>
@@ -62,18 +62,18 @@ const CustomerList: React.FC = () => {
                     <IonCol>Dirección</IonCol>
                     <IonCol>Acciones</IonCol>
                 </IonRow>
-                {clientes.map((cliente: Customer) => 
+                {empleados.map((empleado: Employee) => 
 
-                    <IonRow key={cliente.id}>
-                        <IonCol>{cliente.firstname} {cliente.lastname}</IonCol>
-                        <IonCol>{cliente.email}</IonCol>
-                        <IonCol>{cliente.phone}</IonCol>
-                        <IonCol>{cliente.address}</IonCol>
+                    <IonRow key={empleado.id}>
+                        <IonCol>{empleado.firstname} {empleado.lastname}</IonCol>
+                        <IonCol>{empleado.email}</IonCol>
+                        <IonCol>{empleado.phone}</IonCol>
+                        <IonCol>{empleado.address}</IonCol>
                         <IonCol>
-                            <IonButton onClick={() => editCustomer(String(cliente.id))} color='primary' fill='clear'>
+                            <IonButton onClick={() => editEmployee(String(empleado.id))} color='primary' fill='clear'>
                                 <IonIcon icon={pencil} slot="icon-only" />
                             </IonButton>
-                            <IonButton onClick={() => remove(String(cliente.id))} color='danger' fill='clear'>
+                            <IonButton onClick={() => remove(String(empleado.id))} color='danger' fill='clear'>
                                 <IonIcon icon={close} slot="icon-only" />
                             </IonButton>
                         </IonCol>
@@ -82,9 +82,10 @@ const CustomerList: React.FC = () => {
                 )}
             </IonGrid>
         </IonCard>
+
       </IonContent>
     </IonPage>
   );
 };
 
-export default CustomerList;
+export default EmployeeList;
