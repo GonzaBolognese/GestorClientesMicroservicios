@@ -15,13 +15,13 @@ const EmployeeList: React.FC = () => {
     search();
   },[history.location.pathname]);
 
-  const search = () => {
-    let result = searchEmployee()
+  const search = async () => {
+    let result = await searchEmployee()
     setEmpleados(result)
   }
 
-  const remove = (id:string) => {
-    removeEmployee(id);
+  const remove = async (id:string) => {
+    await removeEmployee(id);
     search()
   }
 

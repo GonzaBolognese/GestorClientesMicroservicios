@@ -1,8 +1,8 @@
-import Customer from "./Customer";
+import Supplier from "./Supplier";
 
-export async function searchCustomer () {
+export async function searchSupplier () {
 
-    let url = import.meta.env.VITE_API_URL + "customers"
+    let url = import.meta.env.VITE_API_URL + "suppliers"
 
     let response = await fetch(url, {
         "method": "GET",
@@ -15,8 +15,8 @@ export async function searchCustomer () {
 
 }
 
-export async function removeCustomer (id: string) {
-    let url = import.meta.env.VITE_API_URL + "customers/" + id
+export async function removeSupplier (id: string) {
+    let url = import.meta.env.VITE_API_URL + "suppliers/" + id
 
     await fetch(url, {
         "method": "DELETE",
@@ -27,36 +27,36 @@ export async function removeCustomer (id: string) {
 
 }
 
-export async function saveCustomer (customer: Customer) {
-    let customers = await searchCustomer();
-    if(customer.id){
-        let url = import.meta.env.VITE_API_URL + "customers/" + customer.id
+export async function saveSupplier (supplier: Supplier) {
+    let suppliers = await searchSupplier();
+    if(supplier.id){
+        let url = import.meta.env.VITE_API_URL + "suppliers/" + supplier.id
 
         fetch(url, {
             "method": "PUT",
-            "body": JSON.stringify(customer),
+            "body": JSON.stringify(supplier),
             "headers": {
                 "Content-Type": "application/json"
             }
         });
     }else {
-        let url = import.meta.env.VITE_API_URL + "customers"
+        let url = import.meta.env.VITE_API_URL + "suppliers"
 
         fetch(url, {
             "method": "POST",
-            "body": JSON.stringify(customer),
+            "body": JSON.stringify(supplier),
             "headers": {
                 "Content-Type": "application/json"
             }
         });
     }
 
-    localStorage['customers'] = JSON.stringify(customers);
+    localStorage['suppliers'] = JSON.stringify(suppliers);
 
 }
 
-export async function searchCustomerById (id:string) {
-    let url = import.meta.env.VITE_API_URL + "customers/" + id
+export async function searchSupplierById (id:string) {
+    let url = import.meta.env.VITE_API_URL + "suppliers/" + id
     console.log(url);
     
 

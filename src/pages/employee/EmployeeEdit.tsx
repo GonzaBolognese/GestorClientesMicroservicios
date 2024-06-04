@@ -15,17 +15,17 @@ const EmployeeEdit: React.FC = () => {
     search();
   },[]);
 
-  const search = () => {
+  const search = async () => {
     // let result = searchEmployee()
     // setEmpleados(result)
     if(id !== "new"){
-      let result = searchEmployeeById(id);
+      let result = await searchEmployeeById(id);
       setEmployee(result);
     }
   }
 
-  const save = () => {
-    saveEmployee(employee)
+  const save = async () => {
+    await saveEmployee(employee)
     history.push('/folder/employees');
   }
 
@@ -74,6 +74,12 @@ const EmployeeEdit: React.FC = () => {
                 <IonItem>
                   <IonInput onIonChange={e => employee.address = e.detail.value?.toString()} 
                     label="Direccion" labelPlacement="stacked" placeholder="Ingrese la direccion" value={employee.address}></IonInput>
+                </IonItem>
+              </IonCol>
+              <IonCol>
+                <IonItem>
+                  <IonInput onIonChange={e => employee.salary = Number(e.detail.value)} 
+                    label="Salario" labelPlacement="stacked" placeholder="Ingrese el salario" value={employee.salary}></IonInput>
                 </IonItem>
               </IonCol>
             </IonRow>

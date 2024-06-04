@@ -2,12 +2,12 @@ import { IonButtons, IonButton, IonCard, IonCol, IonContent, IonGrid, IonHeader,
 import { useHistory, useParams } from 'react-router';
 import { add, close, pencil } from 'ionicons/icons';
 import { useEffect, useState } from 'react';
-import { removeVendor, searchVendor } from './VendorApi';
-import Vendor from './Vendor';
+import Supplier from './Supplier';
+import { removeSupplier, searchSupplier } from './SupplierApi';
 
 
-const VendorList: React.FC = () => {
-  const [proovedors, setProovedors] = useState<Vendor[]>([]);
+const SupplierList: React.FC = () => {
+  const [proovedors, setProovedors] = useState<Supplier[]>([]);
   const { name } = useParams<{ name: string; }>();
   const history = useHistory();
 
@@ -15,22 +15,22 @@ const VendorList: React.FC = () => {
     search();
   },[history.location.pathname]);
 
-  const search = () => {
-    let result = searchVendor()
+  const search = async () => {
+    let result = await searchSupplier()
     setProovedors(result)
   }
 
-  const remove = (id:string) => {
-    removeVendor(id);
+  const remove = async (id:string) => {
+    await removeSupplier(id);
     search()
   }
 
-  const addVendor = () => {
-    history.push('vendors/new')
+  const addSupplier = () => {
+    history.push('suppliers/new')
   }
 
-  const editVendor = (id: string) => {
-    history.push('vendors/' + id)
+  const editSupplier = (id: string) => {
+    history.push('suppliers/' + id)
   }
 
   return (
@@ -49,7 +49,7 @@ const VendorList: React.FC = () => {
             <IonTitle className='table-title'>Gestion de Proovedors</IonTitle>
 
             <IonItem>
-                <IonButton onClick={addVendor} color="primary" fill='outline' slot="end" size='default'>
+                <IonButton onClick={addSupplier} color="primary" fill='outline' slot="end" size='default'>
                     <IonIcon icon={add} />
                     Agregar Proovedor
                 </IonButton>
@@ -62,15 +62,15 @@ const VendorList: React.FC = () => {
                     <IonCol>Dirección</IonCol>
                     <IonCol>Acciones</IonCol>
                 </IonRow>
-                {proovedors.map((proovedor: Vendor) => 
+                {proovedors.map((proovedor: Supplier) => 
 
                     <IonRow key={proovedor.id}>
-                        <IonCol>{proovedor.firstname} {proovedor.lastname}</IonCol>
+                        <IonCol>{proovedor.name}</IonCol>
                         <IonCol>{proovedor.email}</IonCol>
                         <IonCol>{proovedor.phone}</IonCol>
                         <IonCol>{proovedor.address}</IonCol>
                         <IonCol>
-                            <IonButton onClick={() => editVendor(String(proovedor.id))} color='primary' fill='clear'>
+                            <IonButton onClick={() => editSupplier(String(proovedor.id))} color='primary' fill='clear'>
                                 <IonIcon icon={pencil} slot="icon-only" />
                             </IonButton>
                             <IonButton onClick={() => remove(String(proovedor.id))} color='danger' fill='clear'>
@@ -88,4 +88,4 @@ const VendorList: React.FC = () => {
   );
 };
 
-export default VendorList;
+export default SupplierList;
